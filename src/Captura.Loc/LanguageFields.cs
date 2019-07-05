@@ -976,5 +976,12 @@ namespace Captura
             get => Get();
             set => Set(value);
         }
+
+        public string RecordFullScreen
+        {
+            get => Get();
+            set => Set(value);
+        }
+
     }
 }

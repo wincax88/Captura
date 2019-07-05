@@ -34,7 +34,7 @@
 
         public bool Expanded
         {
-            get => Get(true);
+            get => Get(false); // Get(true);
             set => Set(value);
         }
 

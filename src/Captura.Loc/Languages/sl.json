@@ -156,5 +156,6 @@
   "Website": "Spletna stran",
   "Window": "Okno",
   "WindowScreenShotTransparency": "Prosojnost okna posnetka zaslona",
-  "Yes": "Da"
+  "Yes": "Da",
+  "RecordFullScreen": "Record fullScreen"
 }

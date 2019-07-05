@@ -156,5 +156,6 @@
   "Website": "网站",
   "Window": "窗口",
   "WindowScreenShotTransparency": "窗口截图透明度",
-  "Yes": "是"
+  "Yes": "是",
+  "RecordFullScreen": "录制全屏"
 }

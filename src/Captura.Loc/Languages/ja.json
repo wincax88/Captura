@@ -156,5 +156,6 @@
   "Website": "ウェブサイト",
   "Window": "ウィンドウ",
   "WindowScreenShotTransparency": "ウインドウのスクリーンショットの透明度",
-  "Yes": "はい"
+  "Yes": "はい",
+  "RecordFullScreen": "Record fullScreen"
 }

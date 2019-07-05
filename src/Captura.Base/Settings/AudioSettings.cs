@@ -10,7 +10,7 @@
 
         public bool RecordMicrophone
         {
-            get => Get(false);
+            get => Get(true); // Get(false);
             set => Set(value);
         }
 
@@ -22,7 +22,7 @@
 
         public bool RecordSpeaker
         {
-            get => Get(false);
+            get => Get(true); // Get(false);
             set => Set(value);
         }
 

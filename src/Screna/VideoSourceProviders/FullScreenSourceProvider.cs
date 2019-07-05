@@ -17,7 +17,7 @@ namespace Captura.Models
 
         public override string Name => Loc.FullScreen;
 
-        public override string Description { get; } = "Record Fullscreen.";
+        public override string Description => Loc.RecordFullScreen; //{ get; } = "Record Fullscreen.";
 
         public override string Icon { get; }
 

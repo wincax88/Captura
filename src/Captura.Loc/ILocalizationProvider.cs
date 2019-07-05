@@ -164,6 +164,7 @@ namespace Captura
         string Window { get; }
         string WindowScreenShotTransparency { get; }
         string Yes { get; }
+        string RecordFullScreen { get; }
 
         event Action<CultureInfo> LanguageChanged;
     }
