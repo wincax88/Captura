@@ -1,10 +1,13 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Captura.ViewModels;
 using Sentry;
+using ZetaIpc;
+using ZetaIpc.Runtime.Server;
 
 namespace Captura
 {
@@ -20,6 +23,8 @@ namespace Captura
             {
                 try
                 {
+                    var server = StartServer();
+
                     Instance = this;
 
                     InitializeComponent();
@@ -46,6 +51,8 @@ namespace Captura
 
                     Closing += (Sender, Args) =>
                     {
+                        StopServer(server);
+
                         if (!TryExit())
                             Args.Cancel = true;
                     };
@@ -114,5 +121,27 @@ namespace Captura
         void HideButton_Click(object Sender, RoutedEventArgs Args) => Hide();
 
         void ShowMainWindow(object Sender, RoutedEventArgs E) => this.ShowAndFocus();
+
+        IpcServer StartServer()
+        {
+            IpcServer s = new IpcServer();
+
+            s.Start(8089); // Passing no port selects a free port automatically.
+
+            Console.WriteLine("Started server on port {0}.", s.Port);
+
+            s.ReceivedRequest += (sender, args) =>
+            {
+                args.Response = "I've got: " + args.Request;
+                args.Handled = true;
+            };
+
+            return s;
+        }
+
+        void StopServer(IpcServer s)
+        {
+            s.Stop();
+        }
     }
 }
