@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Captura.ViewModels;
+using Sentry;
 
 namespace Captura
 {
@@ -15,35 +16,45 @@ namespace Captura
 
         public MainWindow()
         {
-            Instance = this;
-            
-            InitializeComponent();
-
-            _helper = ServiceProvider.Get<MainWindowHelper>();
-
-            _helper.MainViewModel.Init(!App.CmdOptions.NoPersist, !App.CmdOptions.Reset);
-
-            _helper.HotkeySetup.Setup();
-
-            _helper.TimerModel.Init();
-
-            Loaded += (Sender, Args) =>
+            using (SentrySdk.Init("https://88124b0c389141c7907e11ee0f76a8b8@sentry.io/1500124"))
             {
-                RepositionWindowIfOutside();
+                try
+                {
+                    Instance = this;
 
-                ServiceProvider.Get<WebcamPage>().SetupPreview();
+                    InitializeComponent();
 
-                _helper.HotkeySetup.ShowUnregistered();
-            };
+                    _helper = ServiceProvider.Get<MainWindowHelper>();
 
-            if (App.CmdOptions.Tray || _helper.Settings.Tray.MinToTrayOnStartup)
-                Hide();
+                    _helper.MainViewModel.Init(!App.CmdOptions.NoPersist, !App.CmdOptions.Reset);
 
-            Closing += (Sender, Args) =>
-            {
-                if (!TryExit())
-                    Args.Cancel = true;
-            };
+                    _helper.HotkeySetup.Setup();
+
+                    _helper.TimerModel.Init();
+
+                    Loaded += (Sender, Args) =>
+                    {
+                        RepositionWindowIfOutside();
+
+                        ServiceProvider.Get<WebcamPage>().SetupPreview();
+
+                        _helper.HotkeySetup.ShowUnregistered();
+                    };
+
+                    if (App.CmdOptions.Tray || _helper.Settings.Tray.MinToTrayOnStartup)
+                        Hide();
+
+                    Closing += (Sender, Args) =>
+                    {
+                        if (!TryExit())
+                            Args.Cancel = true;
+                    };
+                }
+                catch (System.Exception e)
+                {
+                    SentrySdk.CaptureException(e);
+                }
+            }
         }
 
         void RepositionWindowIfOutside()
